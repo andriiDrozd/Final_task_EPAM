@@ -13,11 +13,39 @@ import java.util.List;
 
 public class FacultyDaoImplement extends AbstractDao implements FacultyDao {
     private static final String FIND_ALL = "SELECT id, name, capacity, state, budget_places FROM faculty";
+    private static final String FIND_ALL_ORDER_BY_NAME="SELECT id, name, capacity, state, budget_places FROM faculty\n" +
+            "ORDER BY faculty.name";
+    private static final String FIND_ALL_ORDER_BY_NAME_DESC="SELECT id, name, capacity, state, budget_places FROM faculty\n" +
+            "ORDER BY faculty.name DESC";
+    private static final String FIND_ALL_ORDER_BY_BUDGET_PLACES="SELECT id, name, capacity, state, budget_places FROM faculty\n" +
+            "ORDER BY faculty.budget_places";
+    private static final String FIND_ALL_ORDER_BY_CAPACITY="SELECT id, name, capacity, state, budget_places FROM faculty\n" +
+            "ORDER BY faculty.capacity";
     private static final String FIND_BY_ID = "SELECT id, name, capacity, budget_places,state FROM faculty WHERE id=?";
     private static final String INSERT_FACULTY = "INSERT INTO faculty (name, capacity, budget_places, state) VALUES (?,?,?,?)";
     private static final String DELETE_BY_ID = "DELETE FROM faculty WHERE id=?";
 
     private static final String CLOSE_FACULTY_BY_ID = "UPDATE faculty Set state=? WHERE faculty.id=?";
+
+    public static List<Faculty> getAllFacultiesOrderByName(){
+        List<Faculty> list=getAllFacultiesSort(FIND_ALL_ORDER_BY_NAME);
+        return list;
+    }
+
+    public static List<Faculty> getAllFacultiesOrderByNameDesc(){
+        List<Faculty> list=getAllFacultiesSort(FIND_ALL_ORDER_BY_NAME_DESC);
+        return list;
+    }
+
+    public static List<Faculty> getAllFacultiesOrderByBudgetPlaces(){
+        List<Faculty> list=getAllFacultiesSort(FIND_ALL_ORDER_BY_BUDGET_PLACES);
+        return list;
+    }
+
+    public static List<Faculty> getAllFacultiesOrderByCapacity(){
+        List<Faculty> list=getAllFacultiesSort(FIND_ALL_ORDER_BY_CAPACITY);
+        return list;
+    }
 
     public static void closeFaculty(int facultyId, int facultyState) {
         Connection connection = null;
@@ -121,5 +149,36 @@ public class FacultyDaoImplement extends AbstractDao implements FacultyDao {
         } catch (SQLException e) {
             throw new RuntimeException();
         }
+    }
+
+    public static List<Faculty> getAllFacultiesSort(String command) {
+        Connection connection = null;
+        try {
+            connection = DbManager.getInstance().getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(command);
+
+            List<Faculty> faculties = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Faculty faculty = new Faculty();
+                faculty.setId(resultSet.getInt(Fields.ID));
+                faculty.setName(resultSet.getString(Fields.NAME));
+                faculty.setCapacity(resultSet.getInt(Fields.CAPACITY));
+                faculty.setState(resultSet.getInt(Fields.STATE));
+                faculty.setBudgetPlaces(resultSet.getInt(Fields.BUDGET_PLACES));
+                faculties.add(faculty);
+            }
+            return faculties;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DbManager.getInstance().commitAndClose(connection);
+        }
+
     }
 }

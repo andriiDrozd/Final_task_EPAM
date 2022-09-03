@@ -4,6 +4,7 @@ import com.example.final_task_epam.model.dao.implement.UserDaoImplement;
 import com.example.final_task_epam.model.entity.User;
 import com.example.final_task_epam.role.UserRole;
 import com.example.final_task_epam.util.Parameter;
+import com.example.final_task_epam.util.PasswordHash;
 import com.example.final_task_epam.util.Path;
 
 import javax.servlet.ServletException;
@@ -34,16 +35,14 @@ public class RegistryUserCommand extends Command {
         request.setAttribute(Parameter.REGION, region);
         request.setAttribute(Parameter.INSTITUTE, eductionInstitution);
 
-        session.setAttribute(Parameter.EMAIL, email);
-
-        request.setAttribute(Parameter.PASSWORD, password);
+//        session.setAttribute(Parameter.EMAIL, email);
+//
+//        request.setAttribute(Parameter.PASSWORD, password);
 
         String forward = null;
 
-        if(email==null || name==null || surname==null || region==null || city==null ||eductionInstitution==null ||
-        password==null || confirmPassword==null)
-
-        {
+        if (email == null || name == null || surname == null || region == null || city == null || eductionInstitution == null ||
+                password == null || confirmPassword == null) {
             request.setAttribute(Parameter.ERROR, "One or more of the input boxes was blank. Try again");
             forward = Path.PAGE__REGISTRATION;
             return forward;
@@ -59,11 +58,11 @@ public class RegistryUserCommand extends Command {
             request.setAttribute(Parameter.ERROR, "User with this email is already exist");
             forward = Path.PAGE__REGISTRATION;
         } else {
-
-            User user = new User(UserRole.CANDIDATE,email,password,name,surname,region,city,eductionInstitution);
-session.setAttribute(Parameter.USER, user);
-          int userId= UserDaoImplement.insert(user);
-          user.setUserId(userId);
+            String hashPassword = PasswordHash.hash(password);
+            User user = new User(UserRole.CANDIDATE, email, hashPassword, name, surname, region, city, eductionInstitution);
+            session.setAttribute(Parameter.USER, user);
+            int userId = UserDaoImplement.insert(user);
+            user.setUserId(userId);
             return forward = Path.PAGE__USER__MENU;
         }
         return forward;

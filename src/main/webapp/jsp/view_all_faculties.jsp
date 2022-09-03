@@ -18,31 +18,21 @@
 <body>
 <form>
 
-    <% List<Faculty> faculties = FacultyDaoImplement.getAllFaculties();
-        request.setAttribute("faculties", faculties);%>
-<%--    <form  action="/ControllerServlet" method="post">--%>
-<%--        <input type="hidden" name="type" value="1"/>--%>
-<%--        <button type="submit" name="command" value="view_all_faculties">Sort by A-Z</button><br>--%>
-<%--    </form>--%>
+    <form  action="/ControllerServlet" method="post">
+    Sort by <label>
+    <select name="type" class="select-css">
+        <option value="1">Sort by A-Z</option>
+        <option value="2">Sort by Z-A</option>
+        <option value="3">Sort by Capacity</option>
+        <option value="4">Sort by Budget Places</option>
+    </select>
+</label>
+        <button type="submit" name="command" value="view_all_faculties">Submit</button><br>
+    </form>
 
-<%--    <form  action="/ControllerServlet" method="post">--%>
-<%--        <input type="hidden" name="type" value="2"/>--%>
-<%--        <button type="submit" name="command" value="view_all_faculties">Sort by Z-A</button><br>--%>
-<%--    </form>--%>
-
-<%--    <form  action="/ControllerServlet" method="post">--%>
-<%--        <input type="hidden" name="type" value="3"/>--%>
-<%--        <button type="submit" name="command" value="view_all_faculties">Sort by Capacity</button><br>--%>
-<%--    </form>--%>
-
-<%--    <form  action="/ControllerServlet" method="post">--%>
-<%--        <input type="hidden" name="type" value="4"/>--%>
-<%--        <button type="submit" name="command" value="view_all_faculties">Sort by Budget Places</button><br>--%>
-<%--    </form>--%>
-
-    <c:forEach var="faculty" items="${requestScope.faculties}">
-        <li><a style="color: darkcyan" href="view_faculty.jsp?id=${faculty.id}"><c:out value="${faculty.name}"/> </a></li>
-
+    <c:forEach var="faculty" items="${requestScope.list_of_faculties}">
+       <h3> <li><a style="color: darkcyan" href="/jsp/view_faculty.jsp?id=${faculty.id}"> <c:out value="${faculty.name}"/></a></li></h3>
+                    <h4>Capacity:<c:out value="${faculty.capacity}"/>, Budget places: <c:out value="${faculty.budgetPlaces}"/></h4>
     </c:forEach>
 
 

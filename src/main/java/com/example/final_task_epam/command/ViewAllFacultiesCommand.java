@@ -21,50 +21,43 @@ public class ViewAllFacultiesCommand extends Command {
         String page = null;
 
         List<Faculty> faculties = FacultyDaoImplement.getAllFaculties();
-//        Set<Faculty> facultySet=new TreeSet<>(faculties);
-        if (!faculties.isEmpty()) {
 
-//            page = Path.PAGE__VIEW__ALL__FACULTIES;
-//            if(1 ==(Integer) request.getAttribute("type")) {
-//                facultySet=new TreeSet<>(new Comparator<Faculty>() {
-//                    @Override
-//                    public int compare(Faculty o1, Faculty o2) {
-//                        return o1.getName().compareTo(o2.getName());
-//                    }
-//                });
-//                request.setAttribute(Parameter.LIST_OF_FACULTIES, facultySet);
-//            } else if(2 ==(Integer) request.getAttribute("type")){
-//                facultySet=new TreeSet<>(new Comparator<Faculty>() {
-//                    @Override
-//                    public int compare(Faculty o1, Faculty o2) {
-//                        return o2.getName().compareTo(o1.getName());
-//                    }
-//                });
-//                request.setAttribute(Parameter.LIST_OF_FACULTIES, facultySet);
-//            } else if(3 ==(Integer) request.getAttribute("type")) {
-//                facultySet=new TreeSet<>(new Comparator<Faculty>() {
-//                    @Override
-//                    public int compare(Faculty o1, Faculty o2) {
-//                        return o1.getCapacity()-o2.getCapacity();
-//                    }
-//                });
-//                request.setAttribute(Parameter.LIST_OF_FACULTIES, facultySet);
-//            }else if(3 ==(Integer) request.getAttribute("type")) {
-//                facultySet=new TreeSet<>(new Comparator<Faculty>() {
-//                    @Override
-//                    public int compare(Faculty o1, Faculty o2) {
-//                        return o1.getBudgetPlaces()-o2.getBudgetPlaces();
-//                    }
-//                });
+        if (!faculties.isEmpty()) {
+            if(request.getParameter("type")!=null) {
+
+                page = Path.PAGE__VIEW__ALL__FACULTIES;
+                if ( request.getParameter("type").equals("1")) {
+
+                    faculties = FacultyDaoImplement.getAllFacultiesOrderByName();
+                    request.setAttribute(Parameter.LIST_OF_FACULTIES, faculties);
+
+                } else if (request.getParameter("type").equals("2")) {
+
+                    faculties = FacultyDaoImplement.getAllFacultiesOrderByNameDesc();
+                    request.setAttribute(Parameter.LIST_OF_FACULTIES, faculties);
+
+                } else if (request.getParameter("type").equals("3")) {
+
+                    faculties = FacultyDaoImplement.getAllFacultiesOrderByCapacity();
+                    request.setAttribute(Parameter.LIST_OF_FACULTIES, faculties);
+
+                } else if (request.getParameter("type").equals("4")) {
+
+                    faculties = FacultyDaoImplement.getAllFacultiesOrderByBudgetPlaces();
+                    request.setAttribute(Parameter.LIST_OF_FACULTIES, faculties);
+
+                }
+            }else{
+                faculties = FacultyDaoImplement.getAllFaculties();
                 request.setAttribute(Parameter.LIST_OF_FACULTIES, faculties);
-            page = Path.PAGE__VIEW__ALL__FACULTIES;
-//            }
+                page = Path.PAGE__VIEW__ALL__FACULTIES;
+            }
         } else {
 
             page = Path.PAGE__VIEW__ALL__FACULTIES;
             request.setAttribute(Parameter.ERROR, "No any faculties avaliable now(");
         }
-
         return page;
     }
 }
+

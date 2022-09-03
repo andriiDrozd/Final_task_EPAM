@@ -5,6 +5,7 @@ import com.example.final_task_epam.model.dao.implement.UserDaoImplement;
 import com.example.final_task_epam.model.entity.User;
 import com.example.final_task_epam.role.UserRole;
 import com.example.final_task_epam.util.Parameter;
+import com.example.final_task_epam.util.PasswordHash;
 import com.example.final_task_epam.util.Path;
 
 import javax.servlet.ServletException;
@@ -24,8 +25,8 @@ public class LoginCommand extends Command {
         String email = request.getParameter(Parameter.EMAIL);
         String password = request.getParameter(Parameter.PASSWORD);
 
-        request.setAttribute(Parameter.EMAIL, email);
-        session.setAttribute(Parameter.EMAIL, email);
+//        request.setAttribute(Parameter.EMAIL, email);
+//        session.setAttribute(Parameter.EMAIL, email);
 
         User user = UserDaoImplement.getByLogin(email);
         session.setAttribute(Parameter.USER, user);
@@ -33,17 +34,18 @@ public class LoginCommand extends Command {
             request.setAttribute(Parameter.LOGIN_ERROR, "One or more of the input boxes was blank. Try again");
             forward = Path.PAGE__LOGIN;
             return forward;
-        }
-
-        if (UserDaoImplement.existUser(email, password)) {
-            if (user.getRole().equals(UserRole.ADMIN)) {
-                forward = Path.PAGE__ADMIN__MENU;
-            } else {
-                forward = Path.PAGE__USER__MENU;
-            }
         } else {
-            session.setAttribute(Parameter.LOGIN_ERROR, "Please check your password and email, if you already registered");
-            forward = Path.PAGE__LOGIN;
+            String hashPassword= PasswordHash.hash(password);
+            if (UserDaoImplement.existUser(email, hashPassword)) {
+                if (user.getRole().equals(UserRole.ADMIN)) {
+                    forward = Path.PAGE__ADMIN__MENU;
+                } else {
+                    forward = Path.PAGE__USER__MENU;
+                }
+            } else {
+                session.setAttribute(Parameter.LOGIN_ERROR, "Please check your password and email, if you already registered");
+                forward = Path.PAGE__LOGIN;
+            }
         }
         return forward;
 

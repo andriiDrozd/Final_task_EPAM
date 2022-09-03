@@ -3,6 +3,7 @@ package com.example.final_task_epam.command;
 import com.example.final_task_epam.model.dao.implement.FacultyDaoImplement;
 import com.example.final_task_epam.model.entity.Faculty;
 import com.example.final_task_epam.util.Parameter;
+import com.example.final_task_epam.util.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class ViewFacultyCommand extends Command{
 //            LOGGER.error(e.getMessage());
 //            request.getSession().setAttribute(Parameters.ERROR, Messages.INTERNAL_ERROR);
 //        }
-
+page= Path.PAGE__VIEW__FACULTY;
         return page;
     }
 }
