@@ -2,7 +2,7 @@ package com.example.final_task_epam.model.entity;
 
 import java.util.List;
 
-public class Faculty {
+public class Faculty implements Comparable<Faculty>  {
 
     private int id;
     private String name;
@@ -70,5 +70,22 @@ public class Faculty {
 
     public void setRequiredSubjects(List<Subject> requiredSubjects) {
         this.requiredSubjects = requiredSubjects;
+    }
+
+    @Override
+    public String toString() {
+        return "Faculty{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", capacity=" + capacity +
+                ", requiredSubjects=" + requiredSubjects +
+                ", budgetPlaces=" + budgetPlaces +
+                ", state=" + state +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Faculty o) {
+        return 1;
     }
 }

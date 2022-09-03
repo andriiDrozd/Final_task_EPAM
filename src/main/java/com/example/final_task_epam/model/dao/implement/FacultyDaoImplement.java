@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FacultyDaoImplement extends AbstractDao implements FacultyDao {
-    private static final String FIND_ALL = "SELECT id, name, capacity, state FROM faculty";
+    private static final String FIND_ALL = "SELECT id, name, capacity, state, budget_places FROM faculty";
     private static final String FIND_BY_ID = "SELECT id, name, capacity, budget_places,state FROM faculty WHERE id=?";
     private static final String INSERT_FACULTY = "INSERT INTO faculty (name, capacity, budget_places, state) VALUES (?,?,?,?)";
     private static final String DELETE_BY_ID = "DELETE FROM faculty WHERE id=?";
@@ -54,6 +54,7 @@ public class FacultyDaoImplement extends AbstractDao implements FacultyDao {
                 faculty.setName(resultSet.getString(Fields.NAME));
                 faculty.setCapacity(resultSet.getInt(Fields.CAPACITY));
                 faculty.setState(resultSet.getInt(Fields.STATE));
+                faculty.setBudgetPlaces(resultSet.getInt(Fields.BUDGET_PLACES));
                 faculties.add(faculty);
             }
             return faculties;

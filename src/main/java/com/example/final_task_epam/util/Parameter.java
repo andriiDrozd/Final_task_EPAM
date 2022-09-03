@@ -7,7 +7,7 @@ public class Parameter {
 
     public static final String USER = "user";
     public static final String ERROR = "error";
-
+    public static final String LIST_OF_FACULTIES = "list_of_faculties";
     public static final String LOGIN_ERROR = "loginError";
     public static final String NAME = "name";
     public static final String SURNAME = "surname";

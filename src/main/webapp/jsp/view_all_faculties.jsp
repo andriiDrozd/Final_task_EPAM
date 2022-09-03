@@ -20,8 +20,27 @@
 
     <% List<Faculty> faculties = FacultyDaoImplement.getAllFaculties();
         request.setAttribute("faculties", faculties);%>
+<%--    <form  action="/ControllerServlet" method="post">--%>
+<%--        <input type="hidden" name="type" value="1"/>--%>
+<%--        <button type="submit" name="command" value="view_all_faculties">Sort by A-Z</button><br>--%>
+<%--    </form>--%>
 
-    <c:forEach var="faculty" items="${faculties}">
+<%--    <form  action="/ControllerServlet" method="post">--%>
+<%--        <input type="hidden" name="type" value="2"/>--%>
+<%--        <button type="submit" name="command" value="view_all_faculties">Sort by Z-A</button><br>--%>
+<%--    </form>--%>
+
+<%--    <form  action="/ControllerServlet" method="post">--%>
+<%--        <input type="hidden" name="type" value="3"/>--%>
+<%--        <button type="submit" name="command" value="view_all_faculties">Sort by Capacity</button><br>--%>
+<%--    </form>--%>
+
+<%--    <form  action="/ControllerServlet" method="post">--%>
+<%--        <input type="hidden" name="type" value="4"/>--%>
+<%--        <button type="submit" name="command" value="view_all_faculties">Sort by Budget Places</button><br>--%>
+<%--    </form>--%>
+
+    <c:forEach var="faculty" items="${requestScope.faculties}">
         <li><a style="color: darkcyan" href="view_faculty.jsp?id=${faculty.id}"><c:out value="${faculty.name}"/> </a></li>
 
     </c:forEach>
