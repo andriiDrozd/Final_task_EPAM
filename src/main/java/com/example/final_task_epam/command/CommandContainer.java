@@ -22,6 +22,7 @@ public class CommandContainer {
         commands.put("change_candidate_state_to_enroll", new ChangeCandidateStateToEnroll());
         commands.put("view_statement_of_faculty", new ViewStatementOfFaculty());
         commands.put("close_faculty", new CloseFacultyCommand());
+        commands.put("delete_faculty", new DeleteFacultyCommand());
     }
 
     public static Command get(String commandName) {

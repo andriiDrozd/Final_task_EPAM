@@ -70,11 +70,12 @@ Connection connection=null;
         }
     }
 
-    public void deleteGradesByApplicantId(Connection connection, int applicantId) {
-
+    public static void deleteGradesByApplicantId( int candidateId) {
+Connection connection=null;
         try {
+            connection=DbManager.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_GRADES_BY_APPLICANT_ID);
-            preparedStatement.setInt(1, applicantId);
+            preparedStatement.setInt(1,candidateId);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -167,8 +168,10 @@ Connection connection=null;
         }
     }
 
-    public void deleteRequiredSubjectsByFacultyId(Connection connection, int facultyId) {
+    public static void deleteRequiredSubjectsByFacultyId( int facultyId) {
+        Connection connection=null;
         try {
+            connection=DbManager.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_REQUIRED_SUBJECTS_BY_FACULTY_ID);
             preparedStatement.setInt(1, facultyId);
             preparedStatement.execute();

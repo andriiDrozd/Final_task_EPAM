@@ -20,8 +20,11 @@
 <form id="login" action="/ControllerServlet" method="post">
 
 <button type="submit" name="command" value="view_all_candidates">View all candidates</button><br>
-    <h2><a href="jsp/view_all_faculties.jsp">View all faculties</a></h2>
 
+</form>
+
+<form  action="/ControllerServlet" method="post">
+    <button type="submit" name="command" value="view_all_faculties">View all faculties</button><br>
 </form>
 </body>
 </html>

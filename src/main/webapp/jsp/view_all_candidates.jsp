@@ -16,8 +16,10 @@
 <body>
 
 
-
+${error}
 <form  action="/ControllerServlet" method="post">
+
+        ${requestScope.error}
     <table id="myTable" class="display" border="1" cellpadding="20%">
         <thead>
         <tr>
@@ -31,6 +33,7 @@
         </thead>
         <tbody>
 <%int i =1;%>
+${error}
         <c:forEach items="${requestScope.candidates}" var="candidate">
             <tr>
                 <td><%=i++%></td>
@@ -46,6 +49,7 @@
         </c:forEach>
         </tbody>
     </table>
+        ${requestScope.error}
    <h2> ${requestScope.faculty_state_error}</h2>
     <c:if test="${sessionScope.user.role=='ADMIN'}">
     <h2><a href="jsp/admin_menu.jsp">Back to Main Menu</a></h2>
@@ -56,5 +60,6 @@
     <%--        </p>--%>
     <%--    </c:otherwise>--%>
     <%--</c:choose>--%>
+        ${requestScope.error}
 </body>
 </html>

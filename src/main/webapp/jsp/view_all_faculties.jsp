@@ -17,7 +17,7 @@
 </head>
 <body>
 <form>
-
+    ${error}
     <form  action="/ControllerServlet" method="post">
     Sort by <label>
     <select name="type" class="select-css">
@@ -39,7 +39,7 @@
 </form>
 
 <c:if test="${sessionScope.user.role=='ADMIN'}">
-    <h2><a href="add_faculty.jsp">Add Faculty</a></h2>
+    <h2><a href="/jsp/add_faculty.jsp">Add Faculty</a></h2>
 </c:if>
 
 </div>

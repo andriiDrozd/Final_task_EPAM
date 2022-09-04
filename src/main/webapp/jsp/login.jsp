@@ -25,7 +25,9 @@
 <%--    <button type="submit" name="command" value="view_faculty">View all faculties</button><br>--%>
 <%--</form>--%>
 
-<h2><a href="jsp/view_all_faculties.jsp">View all faculties</a></h2>
+<form  action="/ControllerServlet" method="post">
+    <button type="submit" name="command" value="view_all_faculties">View all faculties</button><br>
+</form>
 
 <h2><a href="jsp/registration_user.jsp">Registry</a></h2>
 </body>

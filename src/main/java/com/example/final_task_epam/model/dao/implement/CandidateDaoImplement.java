@@ -419,10 +419,17 @@ public class CandidateDaoImplement extends AbstractDao implements CandidateDao {
         }
     }
 
-    public void deleteCandidateById(Connection connection, int candidateId)
+    @Override
+    public void deleteCandidateById(Connection connection, int candidateId) {
+
+    }
+
+    public static void deleteCandidateById(int candidateId)
 //            throws candidateDaoException
     {
+        Connection connection=null;
         try {
+            connection=DbManager.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CANDIDATE_BY_ID);
             preparedStatement.setInt(1, candidateId);
             preparedStatement.execute();

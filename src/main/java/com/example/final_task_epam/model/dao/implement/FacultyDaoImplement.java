@@ -1,6 +1,7 @@
 package com.example.final_task_epam.model.dao.implement;
 
 import com.example.final_task_epam.configuration.DbManager;
+import com.example.final_task_epam.model.entity.Candidate;
 import com.example.final_task_epam.model.entity.Faculty;
 import com.example.final_task_epam.model.dao.AbstractDao;
 import com.example.final_task_epam.model.dao.FacultyDao;
@@ -10,16 +11,17 @@ import com.example.final_task_epam.util.Parameter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class FacultyDaoImplement extends AbstractDao implements FacultyDao {
     private static final String FIND_ALL = "SELECT id, name, capacity, state, budget_places FROM faculty";
-    private static final String FIND_ALL_ORDER_BY_NAME="SELECT id, name, capacity, state, budget_places FROM faculty\n" +
+    private static final String FIND_ALL_ORDER_BY_NAME = "SELECT id, name, capacity, state, budget_places FROM faculty\n" +
             "ORDER BY faculty.name";
-    private static final String FIND_ALL_ORDER_BY_NAME_DESC="SELECT id, name, capacity, state, budget_places FROM faculty\n" +
+    private static final String FIND_ALL_ORDER_BY_NAME_DESC = "SELECT id, name, capacity, state, budget_places FROM faculty\n" +
             "ORDER BY faculty.name DESC";
-    private static final String FIND_ALL_ORDER_BY_BUDGET_PLACES="SELECT id, name, capacity, state, budget_places FROM faculty\n" +
+    private static final String FIND_ALL_ORDER_BY_BUDGET_PLACES = "SELECT id, name, capacity, state, budget_places FROM faculty\n" +
             "ORDER BY faculty.budget_places";
-    private static final String FIND_ALL_ORDER_BY_CAPACITY="SELECT id, name, capacity, state, budget_places FROM faculty\n" +
+    private static final String FIND_ALL_ORDER_BY_CAPACITY = "SELECT id, name, capacity, state, budget_places FROM faculty\n" +
             "ORDER BY faculty.capacity";
     private static final String FIND_BY_ID = "SELECT id, name, capacity, budget_places,state FROM faculty WHERE id=?";
     private static final String INSERT_FACULTY = "INSERT INTO faculty (name, capacity, budget_places, state) VALUES (?,?,?,?)";
@@ -27,23 +29,23 @@ public class FacultyDaoImplement extends AbstractDao implements FacultyDao {
 
     private static final String CLOSE_FACULTY_BY_ID = "UPDATE faculty Set state=? WHERE faculty.id=?";
 
-    public static List<Faculty> getAllFacultiesOrderByName(){
-        List<Faculty> list=getAllFacultiesSort(FIND_ALL_ORDER_BY_NAME);
+    public static List<Faculty> getAllFacultiesOrderByName() {
+        List<Faculty> list = getAllFacultiesSort(FIND_ALL_ORDER_BY_NAME);
         return list;
     }
 
-    public static List<Faculty> getAllFacultiesOrderByNameDesc(){
-        List<Faculty> list=getAllFacultiesSort(FIND_ALL_ORDER_BY_NAME_DESC);
+    public static List<Faculty> getAllFacultiesOrderByNameDesc() {
+        List<Faculty> list = getAllFacultiesSort(FIND_ALL_ORDER_BY_NAME_DESC);
         return list;
     }
 
-    public static List<Faculty> getAllFacultiesOrderByBudgetPlaces(){
-        List<Faculty> list=getAllFacultiesSort(FIND_ALL_ORDER_BY_BUDGET_PLACES);
+    public static List<Faculty> getAllFacultiesOrderByBudgetPlaces() {
+        List<Faculty> list = getAllFacultiesSort(FIND_ALL_ORDER_BY_BUDGET_PLACES);
         return list;
     }
 
-    public static List<Faculty> getAllFacultiesOrderByCapacity(){
-        List<Faculty> list=getAllFacultiesSort(FIND_ALL_ORDER_BY_CAPACITY);
+    public static List<Faculty> getAllFacultiesOrderByCapacity() {
+        List<Faculty> list = getAllFacultiesSort(FIND_ALL_ORDER_BY_CAPACITY);
         return list;
     }
 
@@ -140,14 +142,16 @@ public class FacultyDaoImplement extends AbstractDao implements FacultyDao {
         }
     }
 
-    public boolean delete(Connection connection, int facultyId) {
+    public static boolean delete(int facultyId) {
+        Connection connection = null;
         try {
+            connection = DbManager.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID);
             preparedStatement.setInt(1, facultyId);
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
@@ -181,4 +185,36 @@ public class FacultyDaoImplement extends AbstractDao implements FacultyDao {
         }
 
     }
+
+    public static void deleteFaculty(int facultyId) {
+        Connection connection = null;
+        try {
+            connection = DbManager.getInstance().getConnection();
+            connection.setAutoCommit(false);
+            try {
+                TreeSet<Candidate> candidates = CandidateDaoImplement.selectCandidatesByFacultyId(facultyId);
+
+                if (candidates!=null) {
+                    for (Candidate x : candidates) {
+                        SubjectDaoImplement.deleteGradesByApplicantId(x.getId());
+                        CandidateDaoImplement.deleteCandidateById(x.getId());
+                    }
+                }
+                SubjectDaoImplement.deleteRequiredSubjectsByFacultyId(facultyId);
+                delete(facultyId);
+                connection.commit();
+            } catch (Exception e) {
+                connection.rollback();
+                throw new RuntimeException(e);
+            } finally {
+                connection.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+
+            throw new RuntimeException();
+        } finally {
+
+        }
+    }
+
 }

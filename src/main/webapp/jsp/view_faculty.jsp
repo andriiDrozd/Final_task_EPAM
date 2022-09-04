@@ -72,6 +72,12 @@
         <button type="submit" name="command" value="close_faculty">Open faculty</button>
         <br>
     </form>
+    <form action="/ControllerServlet" method="post">
+        <input type="hidden" name="facultyId" value="${faculty.id}"/>
+        <button type="submit" name="command" value="delete_faculty">Delete faculty</button>
+        <br>
+    </form>
+
 </c:if>
 <h1>${error}</h1>
 <%--</c:if>--%>
