@@ -7,11 +7,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@include file="/jsp/head.jsp" %>
+
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+
+
 <h2>${error}</h2>
 <centre>
     <table>
@@ -20,7 +25,7 @@
 
             <input type="hidden" name="command" value="registry"/>
 
-            <input id="email" type="email" placeholder="E-mail"  name="email" required value=${email}>
+            <input id="email" type="email" placeholder="<fmt:message key="email"/>"  name="email" required value=${email}>
             <c:if test="${errorList.get(0)!=null}"><c:out value="${errorList.get(0)}"></c:out> </c:if><br>
             <input id="name" type="text" placeholder="Name"  name="name" required value=${name}>
             <c:if test="${errorList.get(1)!=null}"><c:out value="${errorList.get(1)}"></c:out> </c:if><br>

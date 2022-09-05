@@ -15,16 +15,7 @@ import java.util.TreeSet;
 
 public class Test {
     public static void main(String[] args) throws NoSuchAlgorithmException {
-        String password="1";
-        MessageDigest md=MessageDigest.getInstance("SHA-512");
-        md.update(password.getBytes());
-
-        byte[] digest=md.digest();
-        StringBuffer sb=new StringBuffer();
-        for(byte b:digest) {
-            sb.append(String.format("%02x", b & 0xff));
-                  }
-        System.out.println(sb.toString());
+        System.out.println("привет");
 
     }
 }
