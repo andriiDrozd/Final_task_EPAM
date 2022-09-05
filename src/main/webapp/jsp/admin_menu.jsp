@@ -6,25 +6,29 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@include file="/jsp/head.jsp" %>
+<%--<fmt:bundle basename="page">--%>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-<h1>admin_menu</h1>
+<h1><fmt:message key="admin_menu" bundle="${lang}"/></h1>
 
 
 
-<h2><a href="jsp/view_subject.jsp">View Subject</a></h2>
+<h2><a href="jsp/view_subject.jsp"><fmt:message key="view_subject" bundle="${lang}" /></a></h2>
 
 <form id="login" action="/ControllerServlet" method="post">
 
-<button type="submit" name="command" value="view_all_candidates">View all candidates</button><br>
+<button type="submit" name="command" value="view_all_candidates"><fmt:message key="view_all_candidates" bundle="${lang}"/></button><br>
 
 </form>
 
 <form  action="/ControllerServlet" method="post">
-    <button type="submit" name="command" value="view_all_faculties">View all faculties</button><br>
+    <button type="submit" name="command" value="view_all_faculties"><fmt:message key="view_all_faculties" bundle="${lang}"/></button><br>
 </form>
 </body>
 </html>
+<%--</fmt:bundle>--%>
