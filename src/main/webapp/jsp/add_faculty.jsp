@@ -17,7 +17,8 @@
 <div id="site_content">
 
 
-
+${faculty_error}
+    ${capacity_error}
 
   <div id="content">
 
@@ -25,7 +26,7 @@
     <form action="/ControllerServlet" method="post">
       <input type="hidden" name="command" value="add_faculty"/>
 
-     <input type="text" name="faculty_name" placeholder="Faculty name"/>
+     <input type="text" name="faculty_name" placeholder="Faculty name" value="${facultyName}"/>
         <input type="number" name="capacity" placeholder="Capacity"/> ${error}
         <input type="number" name="budget_places" placeholder="Budget places"/><br>
 

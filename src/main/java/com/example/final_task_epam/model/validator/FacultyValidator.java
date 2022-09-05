@@ -20,7 +20,7 @@ public class FacultyValidator {
 
         try {
             int capacity=Integer.parseInt(capacityString);
-            return capacity >= 2 && capacity <= 100;
+            return capacity >= 2 && capacity <= 1000;
         }catch (NumberFormatException e){
             return false;
         }

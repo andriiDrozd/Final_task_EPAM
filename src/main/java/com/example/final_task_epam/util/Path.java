@@ -13,5 +13,6 @@ public class Path {
     public static final String PAGE__VIEW__ALL__CANDIDATES="/jsp/view_all_candidates.jsp";
     public static final String PAGE__VIEW__CANDIDATE="/jsp/view_candidate.jsp";
     public static final String PAGE__VIEW__CANDIDATES__STATEMENT="/jsp/view_candidates_statement.jsp";
+    public static final String PAGE__ADD_FACULTY="/jsp/add_faculty.jsp";
 
 }
