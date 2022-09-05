@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Title</title>
@@ -19,22 +20,22 @@
 
             <input type="hidden" name="command" value="registry"/>
 
-            <input id="email" type="email" placeholder="E-mail" required name="email" value=${email}><br>
-
-            <input id="name" type="text" placeholder="Name" required name="name" value=${name}><br>
-
-            <input id="surname" type="text" placeholder="Surname" required name="surname" value=${surname}><br>
-
-            <input id="region" type="text" placeholder="Region" required name="region" value=${region}><br>
-
-            <input id="city" type="text" placeholder="City" required name="city" value=${city}><br>
-
-            <input id="eductionInstitution" type="text" placeholder="Eduction Institution" required
-                   name="eductionInstitution" value=${eductionInstitution}><br>
-
-            <input id="password" type="password" placeholder="Password" required name="password" value=${password}><br>
-
-            <input id="confirmPassword" type="password" placeholder="Confirm password" name="confirmPassword"><br>
+            <input id="email" type="email" placeholder="E-mail"  name="email" required value=${email}>
+            <c:if test="${errorList.get(0)!=null}"><c:out value="${errorList.get(0)}"></c:out> </c:if><br>
+            <input id="name" type="text" placeholder="Name"  name="name" required value=${name}>
+            <c:if test="${errorList.get(1)!=null}"><c:out value="${errorList.get(1)}"></c:out> </c:if><br>
+            <input id="surname" type="text" placeholder="Surname"  name="surname" required value=${surname}>
+            <c:if test="${errorList.get(2)!=null}"><c:out value="${errorList.get(2)}"></c:out> </c:if><br>
+            <input id="region" type="text" placeholder="Region"  name="region" required value=${region}>
+            <c:if test="${errorList.get(3)!=null}"><c:out value="${errorList.get(3)}"></c:out> </c:if><br>
+            <input id="city" type="text" placeholder="City"  name="city" required value=${city}>
+            <c:if test="${errorList.get(4)!=null}"><c:out value="${errorList.get(4)}"></c:out> </c:if><br>
+            <input id="eductionInstitution" type="text" placeholder="Eduction Institution"
+                   name="eductionInstitution" required value=${eductionInstitution}>
+            <c:if test="${errorList.get(5)!=null}"><c:out value="${errorList.get(5)}"></c:out> </c:if><br>
+            <input id="password" type="password" placeholder="Password"  name="password" required value=${password}>
+            <c:if test="${errorList.get(6)!=null}"><c:out value="${errorList.get(6)}"></c:out> </c:if><br>
+            <input id="confirmPassword" type="password" placeholder="Confirm password"  required name="confirmPassword"><br>
 
             <input type="submit" value='Registry'>
 

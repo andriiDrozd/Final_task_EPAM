@@ -2,6 +2,7 @@ package com.example.final_task_epam.command;
 
 import com.example.final_task_epam.model.dao.implement.UserDaoImplement;
 import com.example.final_task_epam.model.entity.User;
+import com.example.final_task_epam.model.validator.UserValidator;
 import com.example.final_task_epam.role.UserRole;
 import com.example.final_task_epam.util.Parameter;
 import com.example.final_task_epam.util.PasswordHash;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class RegistryUserCommand extends Command {
     @Override
@@ -38,34 +40,40 @@ public class RegistryUserCommand extends Command {
 //        session.setAttribute(Parameter.EMAIL, email);
 //
 //        request.setAttribute(Parameter.PASSWORD, password);
+        List<String> errorList = UserValidator.validateRegistrationForm(email, password, name, surname, region, city, eductionInstitution);
 
-        String forward = null;
+        String page = null;
+        if (errorList != null) {
+            request.setAttribute("errorList", errorList);
+            page=Path.PAGE__REGISTRATION;
+//            if (email == null || name == null || surname == null || region == null || city == null || eductionInstitution == null ||
+//                    password == null || confirmPassword == null) {
+//                request.setAttribute(Parameter.ERROR, "One or more of the input boxes was blank. Try again");
+//                forward = Path.PAGE__REGISTRATION;
+//                return forward;
+//            }
+        }else {
+            if (!password.equals(confirmPassword)) {
+                request.setAttribute(Parameter.ERROR, "Please check your password");
+                page = Path.PAGE__REGISTRATION;
+                return page;
+            }
 
-        if (email == null || name == null || surname == null || region == null || city == null || eductionInstitution == null ||
-                password == null || confirmPassword == null) {
-            request.setAttribute(Parameter.ERROR, "One or more of the input boxes was blank. Try again");
-            forward = Path.PAGE__REGISTRATION;
-            return forward;
+            if (UserDaoImplement.existUser(email)) {
+                request.setAttribute(Parameter.ERROR, "User with this email is already exist");
+                page = Path.PAGE__REGISTRATION;
+            } else {
+                String hashPassword = PasswordHash.hash(password);
+                User user = new User(UserRole.CANDIDATE, email, hashPassword, name, surname, region, city, eductionInstitution);
+                session.setAttribute(Parameter.USER, user);
+                int userId = UserDaoImplement.insert(user);
+                user.setUserId(userId);
+                return page = Path.PAGE__USER__MENU;
+            }
+
+
         }
-
-        if (!password.equals(confirmPassword)) {
-            request.setAttribute(Parameter.ERROR, "Please check your password");
-            forward = Path.PAGE__REGISTRATION;
-            return forward;
-        }
-
-        if (UserDaoImplement.existUser(email)) {
-            request.setAttribute(Parameter.ERROR, "User with this email is already exist");
-            forward = Path.PAGE__REGISTRATION;
-        } else {
-            String hashPassword = PasswordHash.hash(password);
-            User user = new User(UserRole.CANDIDATE, email, hashPassword, name, surname, region, city, eductionInstitution);
-            session.setAttribute(Parameter.USER, user);
-            int userId = UserDaoImplement.insert(user);
-            user.setUserId(userId);
-            return forward = Path.PAGE__USER__MENU;
-        }
-        return forward;
+        return page;
 
 
     }

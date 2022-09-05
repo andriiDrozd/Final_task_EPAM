@@ -36,10 +36,11 @@
         <c:forEach items="${subject}" var="subject">
             <input class="register_field" name="grade" placeholder="${subject.name}"/><br>
         </c:forEach>
+
         <input type="hidden" name="id" value="${faculty.id}"/>
-        <input class="submitButton" type="submit" value="apply"/><br>
         <button type="submit" name="command" value="apply_to_faculty">Registry</button>
     </form>
+    ${error.marks}
 </div>
 </body>
 </html>
