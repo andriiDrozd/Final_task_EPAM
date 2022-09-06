@@ -8,6 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="/jsp/head.jsp" %>
+
+<fmt:setLocale value="${local}"/>
+<fmt:setBundle basename="localization" var="lang"/>
 <%--<fmt:bundle basename="page">--%>
 <html>
 <head>

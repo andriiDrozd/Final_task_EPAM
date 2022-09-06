@@ -7,21 +7,29 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@include file="/jsp/head.jsp" %>
-<%--<fmt:bundle basename="page">--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<fmt:setLocale value="${local}"/>
+<fmt:setBundle basename="localization" var="lang"/>
+
 <html>
 <head>
     <title>Title</title>
 </head>
+<center>
 <h1><fmt:message key="login" bundle="${lang}"/></h1>
 <body>
 <form id="login" action="/ControllerServlet" method="post">
 
-    <h1>${loginError}</h1>
 
-    <input id="email" type="email" name="email" placeholder="<fmt:message key="email"  bundle="${lang}" />" required  value=${email} ><br>
+ <h2><c:if test="${loginError!=null}"><fmt:message key="${loginError}" bundle="${lang}"/></c:if><br></h2>
+
+
+
+    <input id="email" type="email" name="email" placeholder="<fmt:message key="Email" bundle="${lang}"/>" required value=${email}  ><br>
     <input id="password" type="password" name="password" placeholder="<fmt:message key="password" bundle="${lang}"/>" required><br>
     <button type="submit" name="command" value="login"><fmt:message key="login" bundle="${lang}"/></button><br>
+
 </form>
 
 <%--<form id="view_faculty" action="/ControllerServlet" method="post">--%>
@@ -33,6 +41,7 @@
 </form>
 
 <h2><a href="jsp/registration_user.jsp"><fmt:message key="registry" bundle="${lang}"/></a></h2>
+</center>
 </body>
 </html>
 <%--</fmt:bundle>--%>

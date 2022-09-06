@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <welcome-file-list>
-        <welcome-file>/jsp/login.jsp</welcome-file>
+        <welcome-file>/jsp/welcome.jsp</welcome-file>
     </welcome-file-list>
 <!--    <servlet>-->
 <!--        <servlet-name>ControllerServlet</servlet-name>-->
@@ -15,4 +15,13 @@
 <!--        <servlet-name>ControllerServlet</servlet-name>-->
 <!--        <url-pattern>/ControllerServlet</url-pattern>-->
 <!--    </servlet-mapping>-->
+
+<!--    <filter>-->
+<!--        <filter-name>FilterLanguage</filter-name>-->
+<!--        <filter-class>com.example.final_task_epam.FilterLanguage</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>FilterLanguage</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
 </web-app>

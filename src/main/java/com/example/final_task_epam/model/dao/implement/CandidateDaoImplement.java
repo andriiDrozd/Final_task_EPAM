@@ -103,14 +103,11 @@ public class CandidateDaoImplement extends AbstractDao implements CandidateDao {
                 candidate.setName(resultSet.getString(Fields.NAME));
                 candidate.setSurname(resultSet.getString(Fields.SURNAME));
                 candidate.setFacultyName(resultSet.getString(Fields.FACULTY_NAME));
-
             }
             return candidate;
         } catch (SQLException e) {
             throw new RuntimeException(e);
-
         }
-
     }
 
     public static TreeSet<Candidate> selectCandidatesByFacultyId(int facultyId) {

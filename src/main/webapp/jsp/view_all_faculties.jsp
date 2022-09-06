@@ -11,6 +11,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${local}"/>
+<fmt:setBundle basename="localization" var="lang"/>
 <html>
 <head>
     <title>Title</title>
@@ -21,10 +24,10 @@
     <form  action="/ControllerServlet" method="post">
     Sort by <label>
     <select name="type" class="select-css">
-        <option value="1">Sort by A-Z</option>
-        <option value="2">Sort by Z-A</option>
-        <option value="3">Sort by Capacity</option>
-        <option value="4">Sort by Budget Places</option>
+        <option value="1"> A-Z</option>
+        <option value="2"> Z-A</option>
+        <option value="3"> Capacity</option>
+        <option value="4">Budget Places</option>
     </select>
 </label>
         <button type="submit" name="command" value="view_all_faculties">Submit</button><br>

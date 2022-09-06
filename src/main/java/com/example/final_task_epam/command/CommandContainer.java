@@ -23,6 +23,7 @@ public class CommandContainer {
         commands.put("view_statement_of_faculty", new ViewStatementOfFaculty());
         commands.put("close_faculty", new CloseFacultyCommand());
         commands.put("delete_faculty", new DeleteFacultyCommand());
+        commands.put("choose_language", new ChooseLanguage());
     }
 
     public static Command get(String commandName) {

@@ -9,6 +9,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="/jsp/head.jsp" %>
+
+<c:if test="${local == null}">
+    <fmt:setLocale value="en"/>
+</c:if>
+<c:if test="${local != null}">
+    <fmt:setLocale value="${local}"/>
+</c:if>
+<fmt:setBundle basename="localization" var="lang"/>
 <%--<fmt:bundle basename="page">--%>
 <%--<html lang="${param.lang}">--%>
 <%--<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>--%>
@@ -16,10 +24,9 @@
     <title>Title</title>
 </head>
 <body>
-
-
+<center>
 <h2>${error}</h2>
-<centre>
+
 <%--    <a href="?lang=en_US">English</a>--%>
 <%--    <a href="?lang=uk_UA">Ukraine</a>--%>
     <table>
@@ -28,7 +35,7 @@
 
             <input type="hidden" name="command" value="registry"/>
 
-            <input id="email" type="email" placeholder="<fmt:message key="email" bundle="${lang}"/>"  name="email" required value=${email}>
+            <input id="email" type="email" placeholder="<fmt:message key="Email" bundle="${lang}"/>"  name="email" required value=${email}>
             <c:if test="${errorList.get(0)!=null}"><c:out value="${errorList.get(0)}"></c:out> </c:if><br>
             <input id="name" type="text" placeholder="<fmt:message key="name" bundle="${lang}"/>"  name="name" required value=${name}>
             <c:if test="${errorList.get(1)!=null}"><c:out value="${errorList.get(1)}"></c:out> </c:if><br>
@@ -51,6 +58,7 @@
     </table>
 <%--    </fmt:bundle>--%>
     <%@include file="/jsp/footer.jsp" %>
+
 </centre>
 </body>
 </html>

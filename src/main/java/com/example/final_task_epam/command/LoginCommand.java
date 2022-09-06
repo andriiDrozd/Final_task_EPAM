@@ -1,6 +1,7 @@
 package com.example.final_task_epam.command;
 
 
+import com.example.final_task_epam.Messages;
 import com.example.final_task_epam.model.dao.implement.UserDaoImplement;
 import com.example.final_task_epam.model.entity.User;
 import com.example.final_task_epam.role.UserRole;
@@ -25,13 +26,14 @@ public class LoginCommand extends Command {
         String email = request.getParameter(Parameter.EMAIL);
         String password = request.getParameter(Parameter.PASSWORD);
 
+
 //        request.setAttribute(Parameter.EMAIL, email);
 //        session.setAttribute(Parameter.EMAIL, email);
 
         User user = UserDaoImplement.getByLogin(email);
         session.setAttribute(Parameter.USER, user);
         if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
-            request.setAttribute(Parameter.LOGIN_ERROR, "One or more of the input boxes was blank. Try again");
+            request.setAttribute(Parameter.LOGIN_ERROR, Messages.BOX_WAS_BLANK);
             forward = Path.PAGE__LOGIN;
             return forward;
         } else {
@@ -43,7 +45,7 @@ public class LoginCommand extends Command {
                     forward = Path.PAGE__USER__MENU;
                 }
             } else {
-                session.setAttribute(Parameter.LOGIN_ERROR, "Please check your password and email, if you already registered");
+                request.setAttribute(Parameter.LOGIN_ERROR, Messages.CHECK_OR_REGISTRY);
                 forward = Path.PAGE__LOGIN;
             }
         }

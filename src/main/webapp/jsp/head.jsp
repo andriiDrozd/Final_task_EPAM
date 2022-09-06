@@ -18,41 +18,32 @@
 <%--           scope="session"/>--%>
 <%--</c:if>--%>
 
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-<%--<% if(session.getAttribute("lang")==null) {--%>
-<%--    session.setAttribute("lang",1);--%>
-<%--}--%>
-<%--%>--%>
+<%--<html>--%>
+<%--<head>--%>
+<%--    <title>Title</title>--%>
+<%--</head>--%>
+<%--<body>--%>
+<%--&lt;%&ndash;<% if(session.getAttribute("lang")==null) {&ndash;%&gt;--%>
+<%--&lt;%&ndash;    session.setAttribute("lang",1);&ndash;%&gt;--%>
+<%--&lt;%&ndash;}&ndash;%&gt;--%>
+<%--&lt;%&ndash;%>&ndash;%&gt;--%>
 
-<c:if test="${param.id==1}">
-<fmt:setLocale value="en"/>
-<fmt:setBundle basename="page_en_US" var="lang"/>
-</c:if>
 
-<c:if test="${param.id==0||param.id==null}">
 
-    <fmt:setLocale value="uk"/>
-    <fmt:setBundle basename="page_uk_UA" var="lang"/>
-</c:if>
+<%--<c:if test="${param.id==1}">--%>
+<%--<fmt:setLocale value="en"/>--%>
+<%--<fmt:setBundle basename="page_en_US" var="lang"/>--%>
+<%--</c:if>--%>
 
-<a href="?id=1">English</a>
-<a href="?id=0">Ukraine</a>
-<%--<button type="submit" name="id" value="null">EN</button><br>--%>
-<%--<button type="submit" name="id" value="1">UA</button><br>--%>
+<%--<c:if test="${param.id==0||param.id==null}">--%>
 
-<%--<a href="?page/page_en_US">English</a>--%>
-<%--<a href="?page/page_uk_UA">Ukraine</a>--%>
-<%--    <fmt:setLocale value="${param.locale}"/>--%>
+<%--    <fmt:setLocale value="uk"/>--%>
+<%--    <fmt:setBundle basename="page_uk_UA" var="lang"/>--%>
+<%--</c:if>--%>
+
+<%--<a href="?id=1">English</a>--%>
+<%--<a href="?id=0">Ukraine</a>--%>
+
 <%--<fmt:setBundle basename="localization" var="lang"/>--%>
-
-
-
-<%--<fmt:setLocale value="${param.locale}"/>--%>
-
-
 </body>
 </html>
