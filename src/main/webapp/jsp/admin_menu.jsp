@@ -17,6 +17,7 @@
     <title>Title</title>
 </head>
 <body>
+<center>
 <h1><fmt:message key="admin_menu" bundle="${lang}"/></h1>
 
 
@@ -31,6 +32,7 @@
 
 <form  action="/ControllerServlet" method="post">
     <button type="submit" name="command" value="view_all_faculties"><fmt:message key="view_all_faculties" bundle="${lang}"/></button><br>
+</center>
 </form>
 </body>
 </html>

@@ -6,9 +6,55 @@
     <welcome-file-list>
         <welcome-file>/jsp/welcome.jsp</welcome-file>
     </welcome-file-list>
-<!--    <servlet>-->
+
+
+
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>com.example.final_task_epam.filter.AdminCommandFilter</filter-class>
+        <init-param>
+            <param-name>adminCommands</param-name>
+            <param-value>add_subject view_subject add_faculty view_candidate change_candidate_state_to_enroll close_faculty delete_faculty</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+
+    <filter>
+        <filter-name>CandidateFilter</filter-name>
+        <filter-class>com.example.final_task_epam.filter.CandidateCommandFilter</filter-class>
+        <init-param>
+            <param-name>candidateCommands</param-name>
+            <param-value> apply apply_to_faculty  </param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CandidateFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+
+<!--    <filter>-->
+<!--        <filter-name>JspAccessFilter</filter-name>-->
+<!--        <filter-class>com.example.final_task_epam.filter.JspAccessFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>JspAccessFilter</filter-name>-->
+<!--        <url-pattern>*.jsp</url-pattern>-->
+<!--    </filter-mapping>-->
+
+<!--        <error-page>-->
+<!--        <location>/jsp/error_page.jsp</location>-->
+<!--    </error-page>-->
+
+    <!--    <servlet>-->
 <!--        <servlet-name>ControllerServlet</servlet-name>-->
-<!--        <servlet-class>com.example.final_task_epam.command.ControllerServlet</servlet-class>-->
+<!--        <servlet-class>com.example.final_task_epam.controller.ControllerServlet</servlet-class>-->
 <!--    </servlet>-->
 
 <!--    <servlet-mapping>-->

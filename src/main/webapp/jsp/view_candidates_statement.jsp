@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${local}"/>
+<fmt:setBundle basename="localization" var="lang"/>
 <html>
 <head>
     <title>Title</title>
@@ -16,9 +19,9 @@
     <thead>
     <tr>
         <th>No</th>
-        <th>Candidate</th>
+        <th><fmt:message key="candidate" bundle="${lang}" /></th>
 
-        <th>Total rating</th>
+        <th><fmt:message key="total_rating" bundle="${lang}" /></th>
 
     </tr>
     </thead>
@@ -38,15 +41,9 @@
 <%--        </c:if>--%>
     </c:forEach>
 
-<h1>${requestScope.faculty_closed}</h1>
+<h1><fmt:message key="${requestScope.faculty_closed}" bundle="${lang}" /></h1>
     </tbody>
 </table>
 
-<%--    </c:when>--%>
-<%--    <c:otherwise>--%>
-<%--        <p style="text-align: center"><font color="#b22222"><fmt:message key="no_applications"/></font>--%>
-<%--        </p>--%>
-<%--    </c:otherwise>--%>
-<%--</c:choose>--%>
 </body>
 </html>

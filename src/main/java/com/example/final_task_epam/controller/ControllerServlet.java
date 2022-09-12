@@ -1,4 +1,6 @@
-package com.example.final_task_epam.command;
+package com.example.final_task_epam.controller;
+
+import com.example.final_task_epam.command.Command;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -44,11 +46,14 @@ public class ControllerServlet extends HttpServlet {
 
         // execute command and get forward address
         String forward = null;
+
+
         try {
             forward = command.execute(request, response);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
 
         // if the forward address is not null go to the address
         if (forward != null) {

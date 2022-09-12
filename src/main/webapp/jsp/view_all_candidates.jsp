@@ -54,12 +54,6 @@ ${error}
     <c:if test="${sessionScope.user.role=='ADMIN'}">
     <h2><a href="jsp/admin_menu.jsp">Back to Main Menu</a></h2>
     </c:if>
-    <%--    </c:when>--%>
-    <%--    <c:otherwise>--%>
-    <%--        <p style="text-align: center"><font color="#b22222"><fmt:message key="no_applications"/></font>--%>
-    <%--        </p>--%>
-    <%--    </c:otherwise>--%>
-    <%--</c:choose>--%>
         ${requestScope.error}
 </body>
 </html>

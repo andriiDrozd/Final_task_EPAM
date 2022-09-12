@@ -13,6 +13,7 @@
     <title>Title</title>
 </head>
 <body>
+<center>
 <fmt:setLocale value="${local}"/>
 <fmt:setBundle basename="localization" var="lang"/>
 <h1><fmt:message key="user_menu" bundle="${lang}"/></h1>
@@ -25,6 +26,6 @@
     <button type="submit" name="command" value="view_all_candidates"><fmt:message key="cabinet_of_application" bundle="${lang}"/></button><br>
 </form>
 
-
+</center>
 </body>
 </html>

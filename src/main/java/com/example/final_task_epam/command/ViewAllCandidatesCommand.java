@@ -26,6 +26,10 @@ public class ViewAllCandidatesCommand extends Command {
         Set<Candidate> candidates = null;
         if (user != null && user.getRole() == UserRole.ADMIN) {
             candidates = CandidateDaoImplement.getAllCandidates();
+            for (Candidate x: candidates) {
+                System.out.println("candidate:"+x.toString());
+            }
+
             if(candidates==null || candidates.isEmpty()){
                 request.setAttribute(Parameter.ERROR,"You are not registered to any faculties");
             }

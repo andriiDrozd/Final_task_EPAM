@@ -1,5 +1,6 @@
 package com.example.final_task_epam.command;
 
+import com.example.final_task_epam.Messages;
 import com.example.final_task_epam.model.dao.implement.CandidateDaoImplement;
 import com.example.final_task_epam.model.dao.implement.FacultyDaoImplement;
 import com.example.final_task_epam.model.dao.implement.UserDaoImplement;
@@ -27,7 +28,7 @@ public class ViewStatementOfFaculty extends Command {
         request.setAttribute(Parameter.CANDIDATES, candidates);
         page = Path.PAGE__VIEW__CANDIDATES__STATEMENT;
         if (candidates==null) {
-            request.setAttribute("faculty_closed", "No any candidates on this faculty");
+            request.setAttribute("faculty_closed", Messages.NO_ANY_CANDIDATES);
         }else{
 
             Faculty faculty = FacultyDaoImplement.getById(facultyId);
@@ -36,8 +37,10 @@ public class ViewStatementOfFaculty extends Command {
 
             int capacity = faculty.getCapacity();
             int budgetPlaces = faculty.getBudgetPlaces();
-            String email = (String) request.getSession().getAttribute(Parameter.EMAIL);
-            User user = UserDaoImplement.getByLogin(email);
+//            String email = (String) request.getSession().getAttribute(Parameter.EMAIL);
+//            User user = UserDaoImplement.getByLogin(email);
+            User user= (User) session.getAttribute(Parameter.USER);
+            System.out.println("User:"+user.toString());
             int userId = user.getUserId();
             Candidate candidate = CandidateDaoImplement.getCandidateByFacultyNameAndUserId(facultyName, userId);
             if (candidate != null) {

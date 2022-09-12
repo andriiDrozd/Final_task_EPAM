@@ -20,31 +20,34 @@
 </head>
 <body>
 <form>
-    ${error}
+    <center>
+    <h2><c:if test="${error!=null}"><fmt:message key="${error}" bundle="${lang}"/></c:if><br></h2>
     <form  action="/ControllerServlet" method="post">
-    Sort by <label>
+        <fmt:message key="sort_by" bundle="${lang}"/>
+        <label>
     <select name="type" class="select-css">
         <option value="1"> A-Z</option>
         <option value="2"> Z-A</option>
-        <option value="3"> Capacity</option>
-        <option value="4">Budget Places</option>
+        <option value="3"> <fmt:message key="capacity" bundle="${lang}"/></option>
+        <option value="4"><fmt:message key="budget_places" bundle="${lang}"/></option>
     </select>
 </label>
-        <button type="submit" name="command" value="view_all_faculties">Submit</button><br>
+        <button type="submit" name="command" value="view_all_faculties"><fmt:message key="submit" bundle="${lang}"/></button><br>
     </form>
 
     <c:forEach var="faculty" items="${requestScope.list_of_faculties}">
        <h3> <li><a style="color: darkcyan" href="/jsp/view_faculty.jsp?id=${faculty.id}"> <c:out value="${faculty.name}"/></a></li></h3>
-                    <h4>Capacity:<c:out value="${faculty.capacity}"/>, Budget places: <c:out value="${faculty.budgetPlaces}"/></h4>
+                    <h4><fmt:message key="capacity" bundle="${lang}"/>: <c:out value="${faculty.capacity}"/>,
+                        <fmt:message key="budget_places" bundle="${lang}"/>: <c:out value="${faculty.budgetPlaces}"/></h4>
     </c:forEach>
 
 
 </form>
 
 <c:if test="${sessionScope.user.role=='ADMIN'}">
-    <h2><a href="/jsp/add_faculty.jsp">Add Faculty</a></h2>
+    <h2><a href="/jsp/add_faculty.jsp"><fmt:message key="add_faculty" bundle="${lang}"/></a></h2>
 </c:if>
-
+</center>
 </div>
 </body>
 </html>

@@ -34,5 +34,7 @@ public class Parameter {
 
     public static final String FACULTY_STATE_ERROR = "faculty_state_error";
 
+    public static final String COMMAND="command";
+
 
 }

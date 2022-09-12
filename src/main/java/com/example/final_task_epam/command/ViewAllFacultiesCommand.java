@@ -1,5 +1,6 @@
 package com.example.final_task_epam.command;
 
+import com.example.final_task_epam.Messages;
 import com.example.final_task_epam.model.dao.implement.FacultyDaoImplement;
 import com.example.final_task_epam.model.entity.Faculty;
 import com.example.final_task_epam.util.Fields;
@@ -55,7 +56,7 @@ public class ViewAllFacultiesCommand extends Command {
         } else {
 
             page = Path.PAGE__VIEW__ALL__FACULTIES;
-            request.setAttribute(Parameter.ERROR, "No any faculties avaliable now(");
+            request.setAttribute(Parameter.ERROR, Messages.NO_ANY_FACULTY);
         }
         return page;
     }

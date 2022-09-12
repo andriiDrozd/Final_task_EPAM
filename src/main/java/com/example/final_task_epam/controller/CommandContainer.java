@@ -1,4 +1,6 @@
-package com.example.final_task_epam.command;
+package com.example.final_task_epam.controller;
+
+import com.example.final_task_epam.command.*;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -24,6 +26,7 @@ public class CommandContainer {
         commands.put("close_faculty", new CloseFacultyCommand());
         commands.put("delete_faculty", new DeleteFacultyCommand());
         commands.put("choose_language", new ChooseLanguage());
+        commands.put("error_page", new ErrorCommand());
     }
 
     public static Command get(String commandName) {

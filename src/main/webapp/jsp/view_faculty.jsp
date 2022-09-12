@@ -12,23 +12,27 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${local}"/>
+<fmt:setBundle basename="localization" var="lang"/>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+<center>
 <% int facultyId = Integer.parseInt(request.getParameter(Parameter.ID));
     Faculty faculty = FacultyDaoImplement.getById(facultyId);
     session.setAttribute("faculty", faculty);%>
 
-<h1>Faculty name - <c:out value="${faculty.name}"/></h1>
+<h1><fmt:message key="faculty_name" bundle="${lang}"/> - <c:out value="${faculty.name}"/></h1>
 
 
-<h2> Faculty capacity -  <c:out value="${faculty.capacity}"/>  </h2>
+<h2> <fmt:message key="capacity" bundle="${lang}"/> -  <c:out value="${faculty.capacity}"/>  </h2>
 <input type="hidden" name="capacity" value="${faculty.capacity}"/>
-<h2> Budget places - first <c:out value="${faculty.budgetPlaces}"/> will be invited to Budget</h2>
+<h2><fmt:message key="budget_places" bundle="${lang}"/> -  <c:out value="${faculty.budgetPlaces}"/> </h2>
 <input type="hidden" name="budgetPlaces" value="${faculty.budgetPlaces}"/>
-<h2>Required subject</h2>
+<h2><fmt:message key="required_subjects" bundle="${lang}"/></h2>
 <% List<Subject> subject = SubjectDaoImplement.getRequiredSubjects(facultyId);
     request.setAttribute("subject", subject);%>
 
@@ -39,7 +43,7 @@
 <%--<c:if test="${user.role=='candidate' }">--%>
 <%--&& enrollment.state=='OPENED'--%>
 <c:if test="${faculty.state==1}">
-<c:if test="${sessionScope.user.role!='ADMIN'}">
+<c:if test="${sessionScope.user.role=='CANDIDATE'}">
 <form class="submitButton" action="/ControllerServlet" method="post">
     <input type="hidden" name="command" value="apply"/>
     <input type="hidden" name="id" value="${faculty.id}"/>
@@ -55,32 +59,32 @@
 
 <form action="/ControllerServlet" method="post">
     <input type="hidden" name="facultyId" value="${faculty.id}"/>
-    <button type="submit" name="command" value="view_statement_of_faculty">View statement</button>
+    <button type="submit" name="command" value="view_statement_of_faculty"><fmt:message key="view_statement" bundle="${lang}"/></button>
     <br>
 </form>
 <c:if test="${sessionScope.user.role=='ADMIN'}">
 <form action="/ControllerServlet" method="post">
     <input type="hidden" name="facultyId" value="${faculty.id}"/>
     <input type="hidden" name="state" value="2"/>
-    <button type="submit" name="command" value="close_faculty">Close faculty</button>
+    <button type="submit" name="command" value="close_faculty"><fmt:message key="close_faculty" bundle="${lang}"/></button>
     <br>
 </form>
 
     <form action="/ControllerServlet" method="post">
         <input type="hidden" name="facultyId" value="${faculty.id}"/>
         <input type="hidden" name="state" value="1"/>
-        <button type="submit" name="command" value="close_faculty">Open faculty</button>
+        <button type="submit" name="command" value="close_faculty"><fmt:message key="open_faculty" bundle="${lang}"/></button>
         <br>
     </form>
     <form action="/ControllerServlet" method="post">
         <input type="hidden" name="facultyId" value="${faculty.id}"/>
-        <button type="submit" name="command" value="delete_faculty">Delete faculty</button>
+        <button type="submit" name="command" value="delete_faculty"><fmt:message key="delete_faculty" bundle="${lang}"/></button>
         <br>
     </form>
 
 </c:if>
-<h1>${error}</h1>
-<%--</c:if>--%>
 
+
+</center>
 </body>
 </html>
