@@ -26,4 +26,7 @@ public class Fields {
 
     public static final String BUDGET_PLACES="budget_places";
     public static final String STATE="state";
+
+    public static final String FACULTY_STATE="faculty_state";
+
 }

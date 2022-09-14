@@ -4,6 +4,7 @@ import com.example.final_task_epam.Messages;
 import com.example.final_task_epam.model.entity.User;
 import com.example.final_task_epam.role.UserRole;
 import com.example.final_task_epam.util.Parameter;
+import com.example.final_task_epam.util.Path;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -13,15 +14,13 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class JspAccessFilter implements Filter {
+public class CandidateFilterJsp implements Filter{
     private List<String> accessCommands;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        String[] commands = filterConfig.getInitParameter("UserNull").split(" ");
+        String[] commands = filterConfig.getInitParameter("CandidateFilterJsp").split(" ");
         accessCommands = Arrays.asList(commands);
-
-        System.out.println("JSP Filter init");
     }
 
     @Override
@@ -34,16 +33,14 @@ public class JspAccessFilter implements Filter {
         System.out.println("URI=" + uri);
 
         User user = (User) session.getAttribute(Parameter.USER);
-        if (user == null) {
+        if (user != null && user.getRole().equals(UserRole.CANDIDATE)) {
             if (accessCommands.contains(uri)) {
-                filterChain.doFilter(servletRequest, servletResponse);
-            } else {
                 request.getSession().setAttribute(Parameter.ACCESS_ERROR, Messages.NO_ACCESS);
-                response.sendRedirect("/jsp/error_page.jsp"); // No logged-in user found, so redirect to login page.
-
+                response.sendRedirect(Path.ERROR_404); // No logged-in user found, so redirect to login page.
+            }else{
+                filterChain.doFilter(servletRequest, servletResponse);
             }
-
-        } else{
+        }else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }
@@ -53,4 +50,6 @@ public class JspAccessFilter implements Filter {
 
         System.out.println("JSP Filter destroy");
     }
+
 }
+

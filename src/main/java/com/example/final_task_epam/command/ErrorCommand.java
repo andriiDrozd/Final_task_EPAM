@@ -11,6 +11,6 @@ import java.sql.SQLException;
 public class ErrorCommand extends Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, SQLException {
-        return Path.ERROR_PAGE;
+        return Path.ERROR_404;
     }
 }

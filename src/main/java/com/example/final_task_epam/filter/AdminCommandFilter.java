@@ -6,7 +6,7 @@ public class AdminCommandFilter extends CommandAccessFilter {
     {
         exclusiveCommands ="adminCommands";
         userRole= UserRole.ADMIN;
-        System.out.println("adminFilter");
+        System.out.println("adminCommandFilter");
 //        logMessage="non-admin user tried to perform: ";
 
     }

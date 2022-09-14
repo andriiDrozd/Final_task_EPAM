@@ -19,10 +19,11 @@ public class FacultyDaoImplement extends AbstractDao implements FacultyDao {
             "ORDER BY faculty.name";
     private static final String FIND_ALL_ORDER_BY_NAME_DESC = "SELECT id, name, capacity, state, budget_places FROM faculty\n" +
             "ORDER BY faculty.name DESC";
-    private static final String FIND_ALL_ORDER_BY_BUDGET_PLACES = "SELECT id, name, capacity, state, budget_places FROM faculty\n" +
-            "ORDER BY faculty.budget_places";
+    private static final String FIND_ALL_ORDER_BY_BUDGET_PLACES = "SELECT id, name, capacity, state, budget_places FROM faculty \n" +
+            "ORDER by budget_places DESC";
+
     private static final String FIND_ALL_ORDER_BY_CAPACITY = "SELECT id, name, capacity, state, budget_places FROM faculty\n" +
-            "ORDER BY faculty.capacity";
+            "ORDER BY faculty.capacity DESC";
     private static final String FIND_BY_ID = "SELECT id, name, capacity, budget_places,state FROM faculty WHERE id=?";
     private static final String INSERT_FACULTY = "INSERT INTO faculty (name, capacity, budget_places, state) VALUES (?,?,?,?)";
     private static final String DELETE_BY_ID = "DELETE FROM faculty WHERE id=?";

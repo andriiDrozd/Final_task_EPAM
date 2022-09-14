@@ -25,14 +25,14 @@ public abstract class CommandAccessFilter implements Filter {
     String logMessage;
 
 
+
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         contextPath = filterConfig.getServletContext().getContextPath();
         String[] commands = filterConfig.getInitParameter(exclusiveCommands).split(DELIMITER);
         userCommands = Arrays.asList(commands);
-//        for (String s: userCommands) {
-//            System.out.println(s);
-//        }
+
     }
 
     @Override
@@ -47,17 +47,10 @@ public abstract class CommandAccessFilter implements Filter {
         if ((user == null ||  user.getRole()!= userRole) && userCommands.contains(command)) {
 //            LOGGER.debug(logMessage + command);
             System.out.println("Error");
-            System.out.println(user.getRole()+"!="+userRole);
 
-
-                    for (String s: userCommands) {
-            System.out.println(s);
-        }
-
-            request.getSession().setAttribute(Parameter.ERROR, Messages.NO_ACCESS);
+            request.getSession().setAttribute(Parameter.ACCESS_ERROR, Messages.NO_ACCESS);
             response.sendRedirect(contextPath + "/" + Path.REDIRECT_ERROR_PAGE);
         } else {
-            System.out.println("continue");
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }

@@ -16,5 +16,6 @@ public class Path {
     public static final String PAGE__ADD_FACULTY="/jsp/add_faculty.jsp";
     public static final String ERROR_PAGE="/jsp/error_page.jsp";
     public static final String REDIRECT_ERROR_PAGE = "ControllerServlet?command=error_page";
-
+    public static final String ERROR_404 = "/jsp/404_error_page.jsp";
+    public static final String ERROR_500 = "/jsp/500_error_page.jsp";
 }

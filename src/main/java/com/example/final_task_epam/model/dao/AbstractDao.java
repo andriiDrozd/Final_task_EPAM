@@ -6,7 +6,7 @@ import org.postgresql.jdbc2.optional.ConnectionPool;
 import java.util.logging.Logger;
 
 public abstract class AbstractDao {
-    protected Logger logger;
+    public Logger logger;
 
     {
         logger= (Logger) LogManager.getRootLogger();

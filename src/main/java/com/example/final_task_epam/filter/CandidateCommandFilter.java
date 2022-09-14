@@ -8,7 +8,7 @@ public class CandidateCommandFilter extends CommandAccessFilter implements Filte
     {
         exclusiveCommands ="candidateCommands";
         userRole=UserRole.CANDIDATE;
-        System.out.println("candidateFilter");
+        System.out.println("candidateCommandFilter");
 //        logMessage="non-applicant user tried to perform: ";
 
 

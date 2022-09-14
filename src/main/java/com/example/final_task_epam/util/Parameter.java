@@ -27,13 +27,13 @@ public class Parameter {
     public static final String CONFIRM_PASSWORD = "confirmPassword";
     public static final String BUDGET_PLACES = "budget_places";
     public static final String CANDIDATE_STATE = "candidateState";
-
+    public static final String FACULTY_CLOSED = "faculty_closed";
     public static final String FACULTY_ID = "facultyId";
 
     public static final String STATE = "state";
 
     public static final String FACULTY_STATE_ERROR = "faculty_state_error";
-
+    public static final String ACCESS_ERROR="access_error";
     public static final String COMMAND="command";
 
 

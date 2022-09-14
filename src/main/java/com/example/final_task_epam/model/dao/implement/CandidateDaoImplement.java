@@ -26,12 +26,13 @@ public class CandidateDaoImplement extends AbstractDao implements CandidateDao {
             "JOIN user_table ON candidate.user_id=user_table.id JOIN faculty ON candidate.faculty_id=faculty.id;";
     private static final String UPDATE_ENROLLED_CANDIDATE_STATE = "UPDATE candidate SET candidate_state_id=2 WHERE id=?";
     private static final String UPDATE_NOT_ENROLLED_CANDIDATES_STATE = "UPDATE candidate SET candidate_state_id=3 WHERE candidate_state_id=1";
-    private static final String FIND_ALL_CANDIDATES = "SELECT candidate.id as candidate_id,user_table.name, user_table.surname, faculty.name  as faculty_name,(SELECT sum(mark) \n" +
-            "from subject_marks WHERE candidate_id=candidate.id) as total_rating, candidate_state.state_type \n" +
+    private static final String FIND_ALL_CANDIDATES = "SELECT candidate.id as candidate_id,user_table.name,faculty.state as faculty_state, user_table.surname, faculty.name  as faculty_name,(SELECT sum(mark) \n" +
+            "from subject_marks\n" +
+            "WHERE candidate_id=candidate.id) as total_rating, candidate_state.state_type \n" +
             "FROM candidate\n" +
             "JOIN user_table ON candidate.user_id=user_table.id \n" +
             "JOIN faculty ON candidate.faculty_id=faculty.id\n" +
-            "JOIN candidate_state ON candidate_state.id=candidate.candidate_state_id; \n";
+            "JOIN candidate_state ON candidate_state.id=candidate.candidate_state_id";
     private static final String DELETE_CANDIDATE_BY_ID = "DELETE FROM candidate WHERE id=?";
     private static final String FIND_CANDIDATE_BY_ID = "SELECT  user_table.id, user_table.name, user_table.surname, faculty.name as faculty_name,candidate.faculty_id, candidate_state.state_type\n" +
             "FROM candidate JOIN user_table ON candidate.user_id = user_table.id \n" +
@@ -259,6 +260,7 @@ public class CandidateDaoImplement extends AbstractDao implements CandidateDao {
                 candidate.setFacultyName(resultSet.getString(Fields.FACULTY_NAME));
                 candidate.setTotalRating(resultSet.getInt(Fields.TOTAL_RATING));
                 candidate.setCandidateState(CandidateState.valueOf(resultSet.getString(Fields.STATE_TYPE).toUpperCase()));
+                candidate.setFacultyState(resultSet.getString(Fields.FACULTY_STATE));
                 candidates.add(candidate);
             }
             return candidates;

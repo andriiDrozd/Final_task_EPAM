@@ -8,6 +8,8 @@ import com.example.final_task_epam.role.UserRole;
 import com.example.final_task_epam.util.Parameter;
 import com.example.final_task_epam.util.PasswordHash;
 import com.example.final_task_epam.util.Path;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +20,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginCommand extends Command {
+    private static final Logger LOGGER=LogManager.getLogger(LoginCommand.class);
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, SQLException {
+        LOGGER.info("entry");
         HttpSession session = request.getSession();
         String forward = null;
 
@@ -40,13 +44,17 @@ public class LoginCommand extends Command {
             String hashPassword= PasswordHash.hash(password);
             if (UserDaoImplement.existUser(email, hashPassword)) {
                 if (user.getRole().equals(UserRole.ADMIN)) {
+                    LOGGER.debug("successful login as "+user.getRole());
                     forward = Path.PAGE__ADMIN__MENU;
+
                 } else {
+                    LOGGER.debug("successful login as "+user.getRole());
                     forward = Path.PAGE__USER__MENU;
                 }
             } else {
                 request.setAttribute(Parameter.LOGIN_ERROR, Messages.CHECK_OR_REGISTRY);
                 forward = Path.PAGE__LOGIN;
+                LOGGER.info("error entry");
             }
         }
         return forward;

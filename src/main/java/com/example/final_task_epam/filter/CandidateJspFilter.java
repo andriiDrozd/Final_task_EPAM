@@ -13,15 +13,15 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class JspAccessFilter implements Filter {
+public class CandidateJspFilter implements Filter {
     private List<String> accessCommands;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        String[] commands = filterConfig.getInitParameter("UserNull").split(" ");
+        String[] commands = filterConfig.getInitParameter("Candidate").split(" ");
         accessCommands = Arrays.asList(commands);
 
-        System.out.println("JSP Filter init");
+
     }
 
     @Override
@@ -34,16 +34,12 @@ public class JspAccessFilter implements Filter {
         System.out.println("URI=" + uri);
 
         User user = (User) session.getAttribute(Parameter.USER);
-        if (user == null) {
+        if (user != null && user.getRole().equals(UserRole.CANDIDATE)) {
             if (accessCommands.contains(uri)) {
-                filterChain.doFilter(servletRequest, servletResponse);
-            } else {
                 request.getSession().setAttribute(Parameter.ACCESS_ERROR, Messages.NO_ACCESS);
                 response.sendRedirect("/jsp/error_page.jsp"); // No logged-in user found, so redirect to login page.
-
             }
-
-        } else{
+        }else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }

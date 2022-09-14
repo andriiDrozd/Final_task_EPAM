@@ -26,8 +26,12 @@ public class ViewAllCandidatesCommand extends Command {
         Set<Candidate> candidates = null;
         if (user != null && user.getRole() == UserRole.ADMIN) {
             candidates = CandidateDaoImplement.getAllCandidates();
-            for (Candidate x: candidates) {
-                System.out.println("candidate:"+x.toString());
+            for (Candidate c : candidates) {
+                if (c.getFacultyState().equals("1")) {
+                    c.setFacultyState("Open");
+                } else if (c.getFacultyState().equals("2")) {
+                    c.setFacultyState("Closed");
+                }
             }
 
             if(candidates==null || candidates.isEmpty()){
