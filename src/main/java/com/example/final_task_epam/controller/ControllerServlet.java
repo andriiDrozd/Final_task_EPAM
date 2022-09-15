@@ -39,7 +39,7 @@ public class ControllerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // extract command name from the request
         String commandName = request.getParameter("command");
-
+        System.out.println("command"+commandName);
 
         // obtain command object by its name
         Command command = CommandContainer.get(commandName);

@@ -25,7 +25,9 @@
     <input type="hidden" name="id" value="${sessionScope.user.userId}"/>
     <button type="submit" name="command" value="view_all_candidates"><fmt:message key="cabinet_of_application" bundle="${lang}"/></button><br>
 </form>
-
+    <form  action="/ControllerServlet" method="post">
+        <button type="submit" name="command" value="logout">logout</button><br>
+    </form>
 </center>
 </body>
 </html>

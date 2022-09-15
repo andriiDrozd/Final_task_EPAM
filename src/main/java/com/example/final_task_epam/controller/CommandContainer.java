@@ -27,6 +27,7 @@ public class CommandContainer {
         commands.put("delete_faculty", new DeleteFacultyCommand());
         commands.put("choose_language", new ChooseLanguage());
         commands.put("error_page", new ErrorCommand());
+        commands.put("logout", new LogoutCommand() );
     }
 
     public static Command get(String commandName) {
