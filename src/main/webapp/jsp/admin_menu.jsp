@@ -12,6 +12,7 @@
 <fmt:setLocale value="${local}"/>
 <fmt:setBundle basename="localization" var="lang"/>
 <%--<fmt:bundle basename="page">--%>
+<%@include file="header.jsp"%>
 <html>
 <head>
     <title>Title</title>

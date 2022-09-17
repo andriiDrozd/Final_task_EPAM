@@ -12,6 +12,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${local}"/>
 <fmt:setBundle basename="localization" var="lang"/>
+<%@include file="header.jsp"%>
 <html>
 <head>
     <title>Title</title>

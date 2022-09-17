@@ -18,7 +18,7 @@ public class LogoutCommand extends Command {
         if (session != null) {
             session.removeAttribute("user");
             System.out.println("logout");
-            page = Path.PAGE__LOGIN;
+            page = Path.WELCOME;
         }
         return page;
     }
