@@ -42,6 +42,10 @@
 
 <h2><a href="jsp/registration_user.jsp"><fmt:message key="registry" bundle="${lang}"/></a></h2>
 </center>
+
+<form  action="/ControllerServlet" method="post">
+    <button type="submit" name="command" value="pagination">Pagination</button><br>
+</form>
 </body>
 </html>
 <%--</fmt:bundle>--%>

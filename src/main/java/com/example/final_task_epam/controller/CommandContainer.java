@@ -28,6 +28,7 @@ public class CommandContainer {
         commands.put("choose_language", new ChooseLanguage());
         commands.put("error_page", new ErrorCommand());
         commands.put("logout", new LogoutCommand() );
+        commands.put("pagination", new PaginationTest());
     }
 
     public static Command get(String commandName) {

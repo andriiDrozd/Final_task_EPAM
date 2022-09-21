@@ -33,6 +33,8 @@ public class CandidateDaoImplement extends AbstractDao implements CandidateDao {
             "JOIN user_table ON candidate.user_id=user_table.id \n" +
             "JOIN faculty ON candidate.faculty_id=faculty.id\n" +
             "JOIN candidate_state ON candidate_state.id=candidate.candidate_state_id";
+
+
     private static final String DELETE_CANDIDATE_BY_ID = "DELETE FROM candidate WHERE id=?";
     private static final String FIND_CANDIDATE_BY_ID = "SELECT  user_table.id, user_table.name, user_table.surname, faculty.name as faculty_name,candidate.faculty_id, candidate_state.state_type\n" +
             "FROM candidate JOIN user_table ON candidate.user_id = user_table.id \n" +
@@ -65,7 +67,7 @@ public class CandidateDaoImplement extends AbstractDao implements CandidateDao {
             "JOIN candidate_state ON candidate_state.id=candidate.candidate_state_id\n" +
             "WHERE user_table.id=?";
 
-    private static final String SELECT_ENROLLED_CANDIDATES_DY_FACULTY_ID ="SELECT ROW_NUMBER() OVER(ORDER BY (SELECT sum(mark) \n" +
+    private static final String SELECT_ENROLLED_CANDIDATES_DY_FACULTY_ID = "SELECT ROW_NUMBER() OVER(ORDER BY (SELECT sum(mark) \n" +
             "from subject_marks \n" +
             "WHERE candidate_id=candidate.id) desc) rating_position, user_table.name, user_table.surname,faculty.state, candidate.id as candidate_id, \n" +
             "faculty.name as faculty_name ,  faculty.id as faculty_id,  (SELECT sum(mark) \n" +
@@ -78,7 +80,7 @@ public class CandidateDaoImplement extends AbstractDao implements CandidateDao {
             "JOIN candidate_state ON candidate_state.id=candidate.candidate_state_id\n" +
             "where state_type='enrolled' AND faculty.id=?";
 
-    private static final String GET_CANDIDATE_FACULTY_NAME_AND_USER_ID="SELECT candidate.id as candidate_id,user_table.name,faculty.state, user_table.surname, faculty.name  as faculty_name,(SELECT sum(mark) \n" +
+    private static final String GET_CANDIDATE_FACULTY_NAME_AND_USER_ID = "SELECT candidate.id as candidate_id,user_table.name,faculty.state, user_table.surname, faculty.name  as faculty_name,(SELECT sum(mark) \n" +
             "from subject_marks \n" +
             "WHERE candidate_id=candidate.id) as total_rating, candidate_state.state_type \n" +
             "FROM candidate\n" +
@@ -87,12 +89,74 @@ public class CandidateDaoImplement extends AbstractDao implements CandidateDao {
             "JOIN candidate_state ON candidate_state.id=candidate.candidate_state_id\n" +
             "WHERE user_table.id=? AND faculty.name=?";
 
+    private static final String FIND_ALL_CANDIDATES_PAGINATION = "SELECT candidate.id as candidate_id,user_table.name,faculty.state as faculty_state, user_table.surname, faculty.name  as faculty_name,(SELECT sum(mark)\n" +
+            "from subject_marks\n" +
+            "WHERE candidate_id=candidate.id) as total_rating, candidate_state.state_type\n" +
+            "FROM candidate\n" +
+            "JOIN user_table ON candidate.user_id=user_table.id \n" +
+            "JOIN faculty ON candidate.faculty_id=faculty.id\n" +
+            "JOIN candidate_state ON candidate_state.id=candidate.candidate_state_id\n" +
+            "LIMIT ? OFFSET ?";
+
+    private static final String COUNT_CANDIDATES = "SELECT COUNT (*) FROM candidate";
+
+    public static int count_candidates() {
+        Connection connection = null;
+        ResultSet resultSet = null;
+        int count = 0;
+        try {
+            connection = DbManager.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery(COUNT_CANDIDATES);
+            while(resultSet.next()){
+                count = resultSet.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return count;
+    }
+
+    public static Set<Candidate> find_candidates_pagination (int limit, int offset) {
+        Connection connection = null;
+        ResultSet resultSet = null;
+        Set<Candidate> candidates = null;
+        try {
+            connection = DbManager.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_CANDIDATES_PAGINATION);
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
+
+            resultSet = preparedStatement.executeQuery();
+
+            candidates = new TreeSet<>();
+            Candidate candidate;
+            while (resultSet.next()) {
+                candidate = new Candidate();
+                candidate.setId(resultSet.getInt(Fields.CANDIDATE_ID));
+                candidate.setName(resultSet.getString(Fields.NAME));
+                candidate.setSurname(resultSet.getString(Fields.SURNAME));
+                candidate.setFacultyName(resultSet.getString(Fields.FACULTY_NAME));
+                candidate.setTotalRating(resultSet.getInt(Fields.TOTAL_RATING));
+                candidate.setCandidateState(CandidateState.valueOf(resultSet.getString(Fields.STATE_TYPE).toUpperCase()));
+                candidate.setFacultyState(resultSet.getString(Fields.FACULTY_STATE));
+                candidates.add(candidate);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return candidates;
+    }
+
     public static Candidate getCandidateByFacultyNameAndUserId(String facultyName, int UserID) {
         Connection connection = null;
         try {
             connection = DbManager.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(GET_CANDIDATE_FACULTY_NAME_AND_USER_ID);
-            preparedStatement.setInt(1,UserID);
+            preparedStatement.setInt(1, UserID);
             preparedStatement.setString(2, facultyName);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -141,6 +205,7 @@ public class CandidateDaoImplement extends AbstractDao implements CandidateDao {
         }
         return facultyCandidates;
     }
+
     public static Set<Candidate> getCandidatesByUserID(int userId) {
         Connection connection = null;
         ResultSet resultSet = null;
@@ -426,9 +491,9 @@ public class CandidateDaoImplement extends AbstractDao implements CandidateDao {
     public static void deleteCandidateById(int candidateId)
 //            throws candidateDaoException
     {
-        Connection connection=null;
+        Connection connection = null;
         try {
-            connection=DbManager.getInstance().getConnection();
+            connection = DbManager.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CANDIDATE_BY_ID);
             preparedStatement.setInt(1, candidateId);
             preparedStatement.execute();

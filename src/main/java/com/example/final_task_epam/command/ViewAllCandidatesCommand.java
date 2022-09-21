@@ -25,6 +25,7 @@ public class ViewAllCandidatesCommand extends Command {
 
         Set<Candidate> candidates = null;
         if (user != null && user.getRole() == UserRole.ADMIN) {
+
             candidates = CandidateDaoImplement.getAllCandidates();
             for (Candidate c : candidates) {
                 if (c.getFacultyState().equals("1")) {
@@ -34,19 +35,19 @@ public class ViewAllCandidatesCommand extends Command {
                 }
             }
 
-            if(candidates==null || candidates.isEmpty()){
-                request.setAttribute(Parameter.ERROR,"You are not registered to any faculties");
+            if (candidates == null || candidates.isEmpty()) {
+                request.setAttribute(Parameter.ERROR, "You are not registered to any faculties");
             }
 
             request.setAttribute("candidates", candidates);
             page = Path.PAGE__VIEW__ALL__CANDIDATES;
         } else {
             candidates = CandidateDaoImplement.getCandidatesByUserID(Integer.parseInt(request.getParameter(Parameter.ID)));
-            for (Candidate x: candidates) {
-                System.out.println("candidate"+x.toString());
+            for (Candidate x : candidates) {
+                System.out.println("candidate" + x.toString());
             }
-            if(candidates==null || candidates.isEmpty()){
-                request.setAttribute(Parameter.ERROR,"You are not registered to any faculties");
+            if (candidates == null || candidates.isEmpty()) {
+                request.setAttribute(Parameter.ERROR, "You are not registered to any faculties");
                 System.out.println("not regestered");
             }
             for (Candidate c : candidates) {
